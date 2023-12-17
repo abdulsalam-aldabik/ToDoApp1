@@ -72,4 +72,4 @@ jobs:
         name: MSIX Package
         path: |
           ${{ env.Wap_Project_Directory }}\AppPackages
-          ${{ env.Wap_Project_Directory }}\bin\Release\ToDoApp1.exe  # Add the path to the .exe file
+          ${{ env.Wap_Project_Directory }}\bin\Debug\ToDoApp1.exe  # Add the path to the .exe file
