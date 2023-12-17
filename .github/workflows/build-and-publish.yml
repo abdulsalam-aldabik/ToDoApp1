@@ -1,32 +1,39 @@
-name: data base UI
+name: .NET Core CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
 
 jobs:
-  build-and-publish:
-    runs-on: ubuntu-latest
+  build:
+
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '5.0.1'
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.1
 
-      - name: Show contents of the current working directory
-        run: ls -R
+    - name: Install dependencies
+      run: dotnet restore
 
-      - name: Publish to .NET Core runtime
-        run: dotnet publish
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
 
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          path: 'salumi.exe'
-          name: .NET App Artifacts
+    - name: Publish
+      run: dotnet publish --configuration Release --no-build --output ./publish
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: myapp
+        path: |
+          ./publish/*.exe
+          ./publish/*.dll
+
