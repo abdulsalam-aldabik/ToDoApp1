@@ -16,7 +16,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '5.0.1'
 
       - name: Show contents of the current working directory
         run: ls -R
@@ -28,5 +28,5 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: '**/*.exe'
+          path: 'salumi.exe'
           name: .NET App Artifacts
