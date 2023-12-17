@@ -1,0 +1,32 @@
+name: data base UI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Show contents of the current working directory
+        run: ls -R
+
+      - name: Publish to .NET Core runtime
+        run: dotnet publish
+
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: '**/*.exe'
+          name: .NET App Artifacts
